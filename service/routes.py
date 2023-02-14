@@ -62,6 +62,18 @@ def create_accounts():
 ######################################################################
 
 # ... place you code here to LIST accounts ...
+app.rounte("/accounts/<int:account_id>", methods=["GET"])
+def read_account(account_id):
+    """
+    Will read the an account based on the requested id
+    """
+    app.logger.info("Request to read an Account with id: %s", account_id)
+
+    account = Account.find(account_id)
+    if not account: 
+        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] not found")
+
+    return account.serialize(), status.HTTP_200_OK
 
 
 ######################################################################
